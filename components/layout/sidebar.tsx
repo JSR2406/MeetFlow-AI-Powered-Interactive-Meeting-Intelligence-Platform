@@ -13,12 +13,14 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
+  BookOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
   { href: "/meetings", icon: Video, label: "Meetings" },
+  { href: "/notes", icon: BookOpen, label: "Notes Hub" },
   { href: "/scheduler", icon: Calendar, label: "Scheduler" },
   { href: "/planner", icon: CheckSquare, label: "Planner" },
   { href: "/settings", icon: Settings, label: "Settings" },
