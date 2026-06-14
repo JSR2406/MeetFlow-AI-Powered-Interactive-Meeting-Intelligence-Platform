@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import {
   Brain,
   LayoutDashboard,
@@ -14,6 +13,7 @@ import {
   ChevronRight,
   Sparkles,
   BookOpen,
+  Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +23,7 @@ const navItems = [
   { href: "/notes", icon: BookOpen, label: "Notes Hub" },
   { href: "/scheduler", icon: Calendar, label: "Scheduler" },
   { href: "/planner", icon: CheckSquare, label: "Planner" },
+  { href: "/integrations", icon: Zap, label: "Integrations" },
   { href: "/settings", icon: Settings, label: "Settings" },
 ];
 
