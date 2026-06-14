@@ -8,6 +8,7 @@ const PUBLIC_PATHS = [
   "/auth/callback",
   "/auth/confirm",
   "/onboarding",
+  "/demo",
 ];
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
@@ -30,6 +31,13 @@ function hasValidSupabaseConfig(): boolean {
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // ── Demo / bypass mode ───────────────────────────────────────────────────
+  // When NEXT_PUBLIC_DEMO_MODE=true, all routes are accessible without auth.
+  // The individual pages fall back to empty-state UI when no DB session exists.
+  if (process.env.NEXT_PUBLIC_DEMO_MODE === "true") {
+    return NextResponse.next({ request });
+  }
 
   // If Supabase is not yet configured, allow all requests through so the
   // app still renders. The individual pages will show appropriate empty states.
