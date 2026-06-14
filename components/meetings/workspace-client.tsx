@@ -7,10 +7,11 @@ import { NotesEditor } from "./notes-editor";
 import { AIChatSidebar } from "./ai-chat-sidebar";
 import { TranscriptPanel } from "./transcript-panel";
 import { FeedbackModal } from "./feedback-modal";
+import { VideoMeetingModal } from "./video-meeting-modal";
 import { toast } from "sonner";
 import {
-  Video, ChevronDown, Mic, MessageSquare, PanelRight,
-  Star, Clock, MoreHorizontal, CheckCircle2
+  Video, Mic, MessageSquare, PanelRight,
+  Clock, MoreHorizontal, CheckCircle2
 } from "lucide-react";
 import { formatMeetingDate, getDurationLabel, getStatusColor } from "@/lib/utils";
 import type { Database } from "@/types/database";
@@ -54,6 +55,7 @@ export function WorkspaceClient({
   const [activeRightPanel, setActiveRightPanel] = useState<Panel>("chat");
   const [transcriptOpen, setTranscriptOpen] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [videoOpen, setVideoOpen] = useState(false);
   const [status, setStatus] = useState(meeting.status);
   const [reactions, setReactions] = useState<{ emoji: string; count: number }[]>([
     { emoji: "👍", count: 0 }, { emoji: "❤️", count: 0 }, { emoji: "🎉", count: 0 },
@@ -183,6 +185,15 @@ export function WorkspaceClient({
             Transcript
           </button>
 
+          {/* Start Video Meeting */}
+          <button
+            onClick={() => setVideoOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand/10 border border-brand/20 hover:bg-brand/20 text-brand text-xs font-medium transition-colors"
+          >
+            <Video className="w-3 h-3" />
+            Start Video
+          </button>
+
           {/* Mark complete */}
           {status !== "completed" && (
             <button
@@ -295,6 +306,19 @@ export function WorkspaceClient({
         meetingId={meeting.id}
         userId={user.id}
       />
+
+      {/* Video Meeting Modal */}
+      {videoOpen && (
+        <VideoMeetingModal
+          meetingId={meeting.id}
+          meetingTitle={meeting.title}
+          transcript={transcript?.raw_text}
+          onClose={() => setVideoOpen(false)}
+          onSummaryGenerated={(summary) => {
+            toast.success("AI summary saved to Notes!");
+          }}
+        />
+      )}
     </div>
   );
 }
